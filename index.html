@@ -373,5 +373,100 @@ window.addEventListener('pagehide',()=>{
   stopMicrophone();
 });
 </script>
+
+<script id="birthday-music">
+(() => {
+  let musicContext;
+  let played = false;
+
+  // Activer le son lors du clic pour les navigateurs mobiles.
+  document.getElementById('start').addEventListener('click', () => {
+    try {
+      if (!musicContext) {
+        musicContext = new (
+          window.AudioContext || window.webkitAudioContext
+        )();
+      }
+      musicContext.resume().catch(() => {});
+    } catch (_) {}
+  }, true);
+
+  function playBirthday() {
+    if (played || !musicContext) return;
+    played = true;
+
+    musicContext.resume().then(() => {
+      // Mélodie instrumentale de Joyeux anniversaire.
+      const notes = [
+        [60,.35],[60,.15],[62,.5],[60,.5],[65,.5],[64,1],
+        [60,.35],[60,.15],[62,.5],[60,.5],[67,.5],[65,1],
+        [60,.35],[60,.15],[72,.5],[69,.5],[65,.5],[64,.5],[62,1],
+        [70,.35],[70,.15],[69,.5],[65,.5],[67,.5],[65,1.5]
+      ];
+
+      const master = musicContext.createGain();
+      master.gain.value = .18;
+      master.connect(musicContext.destination);
+
+      let time = musicContext.currentTime + .12;
+
+      for (const [note, duration] of notes) {
+        const frequency = 440 * Math.pow(2, (note - 69) / 12);
+
+        // Timbre doux, façon boîte à musique.
+        for (const [harmonic, volume] of [[1,.8],[2,.16],[3,.04]]) {
+          const oscillator = musicContext.createOscillator();
+          const envelope = musicContext.createGain();
+
+          oscillator.type = 'sine';
+          oscillator.frequency.value = frequency * harmonic;
+          envelope.gain.setValueAtTime(0, time);
+          envelope.gain.linearRampToValueAtTime(volume, time + .012);
+          envelope.gain.exponentialRampToValueAtTime(
+            .001, time + duration + .18
+          );
+
+          oscillator.connect(envelope);
+          envelope.connect(master);
+          oscillator.start(time);
+          oscillator.stop(time + duration + .22);
+          oscillator.onended = () => {
+            oscillator.disconnect();
+            envelope.disconnect();
+          };
+        }
+
+        time += duration;
+      }
+
+      setTimeout(() => master.disconnect(),
+        (time - musicContext.currentTime + 1) * 1000);
+    }).catch(() => {});
+  }
+
+  const candles = document.getElementById('candles');
+  const observer = new MutationObserver(() => {
+    const all = candles.querySelectorAll('.candle');
+    if (all.length === 20 &&
+        [...all].every(c => c.classList.contains('off'))) {
+      observer.disconnect();
+      playBirthday();
+    }
+  });
+
+  observer.observe(candles, {
+    subtree: true,
+    attributes: true,
+    attributeFilter: ['class']
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && musicContext) {
+      musicContext.suspend().catch(() => {});
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
