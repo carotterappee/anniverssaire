@@ -209,9 +209,9 @@ $('start').onclick=async()=>{
         total+=volume;count++;
       }else{
         $('status').textContent='Puste jetzt sanft in die Nähe des Handy-Mikrofons.';
-        const threshold=Math.max(.035,total/Math.max(count,1)*2.8);
+        const threshold=Math.max(.006,total/Math.max(count,1)*1.6);
         energy=volume>threshold?energy+elapsed:Math.max(0,energy-elapsed*1.5);
-        if(energy>380){blowOut();return}
+        if(energy>180){blowOut();return}
       }
       frame=requestAnimationFrame(listen);
     }
