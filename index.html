@@ -241,7 +241,7 @@ button{cursor:pointer;touch-action:manipulation}
 </div>
     <div id="candles"></div>
   </div>
-  <h2 id="title">Alles Gute zum Geburtstag, Max. Du wirst immer älter</h2>
+  <h2 id="title">Alles Gute zum Geburtstag Max. Du wirst immer älter</h2>
   <p id="status" role="status" aria-live="polite">Puste ins Mikrofon</p>
   <p id="signature">Von der kleinen Französin</p>
   <button id="start">Wünsch dir was</button>
@@ -282,7 +282,7 @@ function blowOut(){
   candles.forEach((c,i)=>setTimeout(()=>c.classList.add('off'),i*55));
   $('halo').style.opacity=0;
   setTimeout(()=>{
-    $('title').textContent='Alles Gute zum Geburtstag, Max. Du wirst immer älter';
+    $('title').textContent='Alles Gute zum Geburtstag Max. Du wirst immer älter';
     $('status').textContent='Puste ins Mikrofon';
     $('start').textContent='↻ Noch einmal';
     $('start').disabled=false;
