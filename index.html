@@ -95,6 +95,116 @@ button{cursor:pointer;touch-action:manipulation}
 @media(prefers-reduced-motion:reduce){
   .flame,.off .smoke,.confetti{animation:none}
 }
+
+/* CAKE_REDESIGN_START */
+.scene{
+  height:310px;
+  margin-top:30px;
+  isolation:isolate;
+}
+.halo{
+  background:radial-gradient(ellipse at 50% 35%,
+    #ffd78228,transparent 65%);
+}
+.plate{
+  bottom:14px;left:2%;width:96%;height:45px;
+  background:linear-gradient(180deg,
+    #fff6de 0%,#cba260 35%,#805923 55%,#e6c58a 80%,#92703c);
+  border:1px solid #e9cd96;
+  box-shadow:0 20px 32px #0008,0 0 35px #eac98b12;
+}
+.cake{
+  left:10%;bottom:34px;width:80%;height:144px;
+  border-radius:50% / 16%;
+  background:
+    repeating-linear-gradient(90deg,
+      transparent 0 10px,#ffffff12 11px,#5a382b0b 12px 14px),
+    linear-gradient(90deg,
+      #b69a7b 0%,#ead7ba 14%,#fff1d7 42%,#f3e2c6 70%,#b89b79 100%);
+  box-shadow:
+    inset 0 -6px 0 #96703f,
+    inset 0 -10px 0 #e7c98b,
+    0 14px 20px #0004;
+}
+.cake:before{
+  top:-10px;height:62px;
+  background:
+    radial-gradient(ellipse at 40% 25%,#fff9eb,#f1dfbf 72%,#d6b78a);
+  border:2px solid #fff4dd;
+  box-shadow:0 5px 0 #dfc6a1,0 9px 10px #74513920;
+}
+.cake:after{
+  content:"";
+  position:absolute;
+  left:0;top:12px;width:100%;height:68px;
+  background:linear-gradient(90deg,#251a20,#694133 45%,#352028);
+  clip-path:polygon(
+    0 0,100% 0,100% 25%,
+    97% 34%,95% 30%,94% 24%,
+    90% 34%,90% 63%,88% 71%,86% 66%,85% 38%,
+    80% 43%,77% 45%,76% 80%,74% 88%,71% 82%,70% 49%,
+    62% 53%,60% 56%,59% 71%,57% 78%,54% 73%,53% 57%,
+    44% 58%,42% 56%,41% 91%,38% 98%,35% 91%,34% 54%,
+    27% 50%,25% 47%,24% 66%,22% 72%,19% 65%,18% 43%,
+    12% 36%,10% 32%,9% 49%,7% 55%,4% 48%,3% 25%,0 22%);
+}
+.number{
+  z-index:2;
+  bottom:18px;left:calc(50% - 30px);
+  width:60px;height:54px;line-height:50px;
+  font-size:34px;font-style:italic;
+  color:#694822;
+  border:1px solid #a57d3e;
+  border-radius:50%;
+  background:linear-gradient(135deg,#c49a50,#fff1bb 45%,#c49a50);
+  box-shadow:0 3px 8px #684c3033,inset 0 0 0 3px #f6dda0;
+  text-shadow:0 1px #fff3ca;
+}
+.berries{
+  position:absolute;inset:0;
+  z-index:2;pointer-events:none;
+}
+.berry{
+  position:absolute;
+  width:19px;height:20px;
+  top:37px;
+  border-radius:48% 48% 42% 42%;
+  background:
+    radial-gradient(circle at 28% 28%,#ff8b91 0 2px,transparent 3px),
+    radial-gradient(circle at 65% 22%,#e85b70 0 3px,transparent 4px),
+    radial-gradient(circle at 46% 52%,#f46c7e 0 3px,transparent 4px),
+    radial-gradient(circle at 22% 69%,#cf3755 0 3px,transparent 4px),
+    radial-gradient(circle at 76% 65%,#c12948 0 3px,transparent 4px),
+    linear-gradient(110deg,#e2536b,#8e1737);
+  box-shadow:2px 4px 4px #49202844;
+}
+.berry:nth-child(1){left:12%;top:25px;transform:rotate(-15deg)}
+.berry:nth-child(2){left:22%;top:34px}
+.berry:nth-child(3){left:33%;top:40px;transform:rotate(12deg)}
+.berry:nth-child(4){right:33%;top:40px;transform:rotate(-8deg)}
+.berry:nth-child(5){right:22%;top:34px}
+.berry:nth-child(6){right:12%;top:25px;transform:rotate(15deg)}
+.pearls{
+  position:absolute;bottom:6px;left:5%;
+  width:90%;height:14px;z-index:3;
+  border-radius:0 0 50% 50%;
+  background:radial-gradient(circle,#fff7df 0 3px,#d6bb8e 4px,
+    transparent 5px) 0 0 / 12px 12px repeat-x;
+}
+.candle{
+  width:7px;
+  background:
+    repeating-linear-gradient(155deg,transparent 0 8px,
+      #fff6d88c 9px 11px,transparent 12px 16px),
+    linear-gradient(90deg,#b88b47,#ffe9a8 45%,#b78741);
+  box-shadow:1px 1px 2px #694c3233;
+}
+.flame{
+  box-shadow:0 0 9px #ffe3a8,0 0 22px #ffc35d99,
+    0 0 42px #ffb94d33;
+}
+/* CAKE_REDESIGN_END */
+
 </style>
 </head>
 <body>
@@ -105,7 +215,14 @@ button{cursor:pointer;touch-action:manipulation}
   <div class="scene" role="img" aria-label="Geburtstagstorte mit 20 Kerzen">
     <div class="halo" id="halo"></div>
     <div class="plate"></div>
-    <div class="cake"><div class="number">20</div></div>
+    <div class="cake">
+  <div class="berries" aria-hidden="true">
+    <i class="berry"></i><i class="berry"></i><i class="berry"></i>
+    <i class="berry"></i><i class="berry"></i><i class="berry"></i>
+  </div>
+  <div class="number">20</div>
+  <div class="pearls" aria-hidden="true"></div>
+</div>
     <div id="candles"></div>
   </div>
   <h2 id="title">Schließ die Augen. Wünsch dir was.</h2>
