@@ -242,7 +242,7 @@ button{cursor:pointer;touch-action:manipulation}
     <div id="candles"></div>
   </div>
   <h2 id="title">Alles Gute zum Geburtstag, Max! Du wirst immer älter!</h2>
-  <p id="status" role="status" aria-live="polite"></p>
+  <p id="status" role="status" aria-live="polite">Puste ins Mikrofon</p>
   <p id="signature">Von der kleinen Französin</p>
   <button id="start">Wünsch dir was</button>
   <button id="fallback">Ohne Mikrofon auspusten</button>
@@ -283,7 +283,7 @@ function blowOut(){
   $('halo').style.opacity=0;
   setTimeout(()=>{
     $('title').textContent='Alles Gute zum Geburtstag, Max! Du wirst immer älter!';
-    $('status').textContent='';
+    $('status').textContent='Puste ins Mikrofon';
     $('start').textContent='↻ Noch einmal';
     $('start').disabled=false;
     if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
@@ -307,7 +307,7 @@ $('start').onclick=async()=>{
   busy=true;
   const current=++generation;
   $('start').disabled=true;
-  $('status').textContent='Bitte erlaube den Zugriff auf dein Mikrofon.';
+  $('status').textContent='Puste ins Mikrofon';
   try{
     if(!navigator.mediaDevices?.getUserMedia)throw new Error('No microphone');
     audio=new(window.AudioContext||window.webkitAudioContext)();
@@ -327,7 +327,7 @@ $('start').onclick=async()=>{
     let total=0,count=0,energy=0;
     const beginning=performance.now();
     let previous=beginning;
-    $('status').textContent='Einen Moment bitte ganz leise sein …';
+    $('status').textContent='Puste ins Mikrofon';
 
     function listen(now){
       if(current!==generation)return;
@@ -340,7 +340,7 @@ $('start').onclick=async()=>{
       if(now-beginning<1400){
         total+=volume;count++;
       }else{
-        $('status').textContent='Puste jetzt sanft in die Nähe des Handy-Mikrofons.';
+        $('status').textContent='Puste ins Mikrofon';
         const threshold=Math.max(.006,total/Math.max(count,1)*1.6);
         energy=volume>threshold?energy+elapsed:Math.max(0,energy-elapsed*1.5);
         if(energy>180){blowOut();return}
@@ -354,7 +354,7 @@ $('start').onclick=async()=>{
     busy=false;
     $('start').disabled=false;
     $('start').textContent='Mikrofon erneut versuchen';
-    $('status').textContent='Kein Mikrofonzugriff. Versuche es erneut oder nutze den Button unten.';
+    $('status').textContent='Puste ins Mikrofon';
   }
 };
 document.addEventListener('visibilitychange',()=>{
@@ -364,7 +364,7 @@ document.addEventListener('visibilitychange',()=>{
     if(!finished){
       busy=false;
       $('start').disabled=false;
-      $('status').textContent='';
+      $('status').textContent='Puste ins Mikrofon';
     }
   }
 });
